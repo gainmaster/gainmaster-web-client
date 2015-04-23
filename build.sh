@@ -21,6 +21,7 @@ function download_application_dependencies
 
 function test_application
 {
+	echo "test"
 	#$PROJECT_DIRECTORY/utility/grunt.sh test
 }
 
