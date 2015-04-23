@@ -120,7 +120,8 @@ for action in "${actions[@]}"; do
         pre-build)
             download_application_dependencies
             test_application
-
+            ;;
+            
         build)
             build_application
             build_docker_image
