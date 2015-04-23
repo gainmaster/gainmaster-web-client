@@ -10,18 +10,18 @@ fi
 
 DOCKER_WORKING_DIRECTORY=${WORKING_DIRECTORY#"$PROJECT_DIRECTORY"}
 
-[[ -z "$PS1" ]] && DOCKER_RUN_OPTIONS="-i -t"
+[[ $- == *i* ]] && DOCKER_RUN_OPTIONS="-i -t" || DOCKER_RUN_OPTIONS=""
 
 if [ $(docker ps -a | grep gainmaster-web-client-data-container | wc -l) -ne 1 ] 
 then
-    docker run -it --name gainmaster-web-client-data-container \
+    docker run $DOCKER_RUN_OPTIONS --name gainmaster-web-client-data-container \
         -v /home/admin \
         gainmaster/yeoman echo "Data container started"
 fi
 
-docker run -it --rm \
+docker run $DOCKER_RUN_OPTIONS --rm \
     --volumes-from="gainmaster-web-client-data-container" \
-    -v /projects/gainmaster-web-client:/project \
+    -v $PROJECT_DIRECTORY:/project \
     -w="/project${DOCKER_WORKING_DIRECTORY}/" \
     --entrypoint bash \
     gainmaster/yeoman $@
