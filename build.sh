@@ -21,7 +21,7 @@ function download_application_dependencies
 
 function test_application
 {
-	$PROJECT_DIRECTORY/utility/grunt.sh test
+	#$PROJECT_DIRECTORY/utility/grunt.sh test
 }
 
 function build_application 
@@ -121,7 +121,7 @@ for action in "${actions[@]}"; do
             download_application_dependencies
             test_application
             ;;
-            
+
         build)
             build_application
             build_docker_image
