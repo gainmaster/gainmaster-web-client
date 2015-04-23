@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
-
+    
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -421,7 +421,7 @@ module.exports = function (grunt) {
       }
     }
   });
-
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
