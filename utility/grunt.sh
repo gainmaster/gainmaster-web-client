@@ -16,7 +16,7 @@ if [ $(docker ps -a | grep gainmaster-web-client-data-container | wc -l) -ne 1 ]
 then
     docker run $DOCKER_RUN_OPTIONS --name gainmaster-web-client-data-container \
         -v /home/admin \
-        gainmaster/yeoman echo "Data container started"
+        gainmaster/nodejs:generator-cg-angular echo "Data container started"
 fi
 
 docker run $DOCKER_RUN_OPTIONS --rm \
@@ -26,4 +26,4 @@ docker run $DOCKER_RUN_OPTIONS --rm \
     --entrypoint grunt \
     -p 9000:9000 \
     -p 35729:35729 \
-    gainmaster/yeoman $@
+    gainmaster/nodejs:generator-cg-angular $@
