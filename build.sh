@@ -31,16 +31,23 @@ function build_application
 
 function build_docker_image 
 {
-    docker build -t $DOCKER_IMAGE_NAME:latest .
+    if [ -z "$NOT_LATEST" ]; then
+        docker build -t ${DOCKER_IMAGE_NAME}:latest .
+    fi
+    if [ -n "$BUILD_NUMBER" ]; then
+        docker build -t ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} .
+    fi
 }
 
 
 function test_docker_image
 {
-	docker history $DOCKER_IMAGE_NAME:latest 2> /dev/null
+    if [ -n "$BUILD_NUMBER" ]; then $version=$BUILD_NUMBER; else $version=latest; fi
+
+    docker history ${DOCKER_IMAGE_NAME}:${version} 2> /dev/null
 
     if [ $? -eq 1 ]; then
-        echo "Cant test $DOCKER_IMAGE_NAME:latest, the image is not built"
+        echo "Cant test ${DOCKER_IMAGE_NAME}:${version}, the image is not built"
         exit 2
     fi
 
@@ -49,23 +56,29 @@ function test_docker_image
 
 function run_docker_image
 {
-    docker history $DOCKER_IMAGE_NAME:latest &> /dev/null
+    if [ -n "$BUILD_NUMBER" ]; then $version=$BUILD_NUMBER; else $version=latest; fi
+
+    docker history ${DOCKER_IMAGE_NAME}:${version} 2> /dev/null
 
     if [ $? -eq 1 ]; then
-        echo "Cant run $DOCKER_IMAGE_NAME:latest, the image is not built"
+        echo "Cant run ${DOCKER_IMAGE_NAME}:${version}, the image is not built"
         exit 2
     fi
 
-    docker run --rm -it -p 8080:80 $DOCKER_IMAGE_NAME:latest
+    docker run --rm -it -p 8080:80 ${DOCKER_IMAGE_NAME}:${version}
 }
 
 
 function push_docker_image 
 {
-	docker history $DOCKER_IMAGE_NAME:latest 2> /dev/null
+    if [ -n "$BUILD_NUMBER" ]; then
+        "Not allowed to push a build without a build number!"
+    fi
+
+	docker history $DOCKER_IMAGE_NAME:${BUILD_NUMBER} 2> /dev/null
 
     if [ $? -eq 1 ]; then
-        echo "Cant test $DOCKER_IMAGE_NAME:latest, the image is not built"
+        echo "Cant push ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}, the image is not built"
         exit 2
     fi
 
@@ -80,10 +93,16 @@ function push_docker_image
         fi
 
         sudo docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
-        sudo docker push $DOCKER_IMAGE_NAME:latest
+        if [ -z "$NOT_LATEST" ]; then
+            sudo docker push $DOCKER_IMAGE_NAME:latest
+        fi
+        sudo docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}
     else
         docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
-        docker push $DOCKER_IMAGE_NAME:latest
+        if [ -z "$NOT_LATEST" ]; then
+            docker push $DOCKER_IMAGE_NAME:latest
+        fi
+        docker push $DOCKER_IMAGE_NAME:${BUILD_NUMBER}
     fi
 }
 
@@ -91,52 +110,70 @@ function push_docker_image
 #
 # Handle input
 #
-versions=()
-actions=("$@")
 
-while getopts ":v:" opt; do
-  case $opt in
-    v)
-      versions+=("$OPTARG")
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG"
-      ;;
-  esac
+#GETOPTS_STRING=`getopt -o b:l --long build-number: -n 'build.sh' -- "$@"`
+#eval set -- "$GETOPTS_STRING"
+
+while getopts "b:l --long build-number:" opt; do
+    case "$1" in
+        --build-number)
+            case "$2" in
+                "")  echo "Option --build-number expected a argument" ; exit 5 ;;
+                *) BUILD_NUMBER=$2; shift 2 ;;
+            esac ;;
+        --not-latest) NOT_LATEST=true ; shift ;;
+        --) shift ; break ;;
+        *) echo "Option $1 is not valid!"; exit 1 ;;
+    esac
 done
 
-if [ ${#actions[@]} -eq 0 ]; then
-    actions=(pre-build build test push)
+if [ -z "$BUILD_NUMBER" ] && [ -n "$NOT_LATEST" ]; then
+    echo "A build can not have a build number and not be latest"
+    exit 5;
 fi
 
-if [ ${#versions[@]} -eq 0 ]; then
-    for version in ${VERSION_DIRECTORY}/*; do
-        versions+=($(basename $(echo $version)))
-    done
+shift $((OPTIND-1))
+actions=("$@")
+
+if [ ${#actions[@]} -eq 0 ]; then
+    actions=(pre-build build post-build test push)
 fi
 
 for action in "${actions[@]}"; do 
     case "$action" in
         pre-build)
+            echo "Executing pre-build action"
             download_application_dependencies
             test_application
             ;;
 
         build)
+            echo "Executing build action"
             build_application
             build_docker_image
             ;;
-         
+        
+        post-build)
+            echo "Executing post-build action"
+            ;;
+
         test)
+            echo "Executing test action"
             test_docker_image
             ;;
 
         run)
+            echo "Executing run action"
             run_docker_image
             ;;
 
         push)
+            echo "Executing push action"
             push_docker_image 
             ;;
+
+        --*) break ;;
+
+        *) echo "Ignoring invalid action ${action}" ;;
     esac
 done
