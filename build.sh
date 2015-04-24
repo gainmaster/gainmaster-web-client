@@ -21,12 +21,12 @@ function download_application_dependencies
 
 function test_application
 {
-	$PROJECT_DIRECTORY/utility/grunt.sh test
+	$PROJECT_DIRECTORY/utility/gulp.sh test
 }
 
 function build_application 
 {
-	$PROJECT_DIRECTORY/utility/grunt.sh build
+	$PROJECT_DIRECTORY/utility/gulp.sh build
 }
 
 function build_docker_image 

@@ -10,10 +10,13 @@ fi
 
 DOCKER_WORKING_DIRECTORY=${WORKING_DIRECTORY#"$PROJECT_DIRECTORY"}
 
-[[ $- == *i* ]] && DOCKER_RUN_OPTIONS="-i -t" || DOCKER_RUN_OPTIONS=""
+if [ "$TERM" == "dumb" ]; then 
+    DOCKER_RUN_OPTIONS=""
+else
+    DOCKER_RUN_OPTIONS="-it"
+fi
 
-if [ $(docker ps -a | grep gainmaster-web-client-data-container | wc -l) -ne 1 ] 
-then
+if [ $(docker ps -a | grep gainmaster-web-client-data-container | wc -l) -ne 1 ] ; then
     docker run $DOCKER_RUN_OPTIONS --name gainmaster-web-client-data-container \
         -v /home/admin \
         gainmaster/nodejs:generator-cg-angular echo "Data container started"
@@ -24,4 +27,4 @@ docker run $DOCKER_RUN_OPTIONS --rm \
     -v $PROJECT_DIRECTORY:/project \
     -w="/project${DOCKER_WORKING_DIRECTORY}/" \
     --entrypoint yo \
-    gainmaster/nodejs:generator-cg-angular $@
+    gainmaster/nodejs:generator-gulp-angular $@

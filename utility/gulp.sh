@@ -4,7 +4,7 @@ WORKING_DIRECTORY=$(pwd)
 PROJECT_DIRECTORY=$(cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd)
 
 if [[ ${WORKING_DIRECTORY} != ${PROJECT_DIRECTORY}* ]]; then
-    echo "Npm must be executed from within the gainmaster-web-client project folder"
+    echo "Grunt must be executed from within the gainmaster-web-client project folder"
     exit 1
 fi
 
@@ -26,5 +26,7 @@ docker run $DOCKER_RUN_OPTIONS --rm \
     --volumes-from="gainmaster-web-client-data-container" \
     -v $PROJECT_DIRECTORY:/project \
     -w="/project${DOCKER_WORKING_DIRECTORY}/" \
-    --entrypoint npm \
+    --entrypoint gulp \
+    -p 3000:3000 \
+    -p 3001:3001 \
     gainmaster/nodejs:generator-gulp-angular $@

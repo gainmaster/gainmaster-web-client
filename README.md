@@ -1,2 +1,0 @@
-# Gainmaster Web Client
-
