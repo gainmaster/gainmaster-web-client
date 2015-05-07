@@ -1,0 +1,129 @@
+
+<div class="container">
+
+  <div ng-include="'app/components/navbar/navbar.html'"></div>
+  <div class='row'>
+    <form name='registerAccountForm'  ng-submit='submitRegisterAccountForm()'>
+      <fieldset>
+        <legend> Register Account </legend>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Username </label>
+            <input type='text'
+                   placeholder='Username'
+                   name="username"
+                   ng-model='username'
+                   ng-minlength='3'
+                   ng-maxlength='30'
+                   required />
+            <div class='error' ng-show='registerAccountForm.username.$valid && submitted'>
+              <small class='error' ng-show='userExist'>
+                Username is already taken
+              </small>
+            </div>
+            <div class='error' ng-show='registerAccountForm.username.$invalid && submitted'>
+              <small class='error' ng-show='registerAccountForm.username.$error.required'>
+                Your name is required.
+              </small>
+              <small class='error' ng-show='registerAccountForm.username.$error.minlength'>
+                Your name is required to be at least 3 characters
+              </small>
+              <small class='error' ng-show='registerAccountForm.username.$error.maxlength'>
+                Your name cannot be longer than 30 characters
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Password </label>
+            <input type='password'
+                   placeholder='Password'
+                   name='password'
+                   ng-model='password'
+                   ng-minlength='3'
+                   ng-maxlength='30'
+                   required />
+            <div class='error' ng-show='registerAccountForm.password.$invalid && submitted'>
+              <small class='error'
+                     ng-show='registerAccountForm.password.$error.required'>
+                Your password is required.
+              </small>
+              <small class="error" ng-show="registerAccountForm.password.$error.minlength">
+                Your password is required to be at least 3 characters
+              </small>
+              <small class="error" ng-show="registerAccountForm.password.$error.maxlength">
+                Your password cannot be longer than 30 characters
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Repeat Password </label>
+            <input type='password'
+                   placeholder='Repeat Password'
+                   name='password2'
+                   ng-model='password2'
+                   ng-minlength='3'
+                   ng-maxlength='30'
+                   required />
+            <div class='error' ng-show='registerAccountForm.password2.$invalid && submitted'>
+              <small class='error'
+                     ng-show='registerAccountForm.password2.$error.required'>
+                Your password is required.
+              </small>
+              <small class="error" ng-show="registerAccountForm.password2.$error.minlength">
+                Your password is required to be at least 3 characters
+              </small>
+              <small class="error" ng-show="registerAccountForm.password2.$error.maxlength">
+                Your password cannot be longer than 30 characters
+              </small>
+            </div>
+            <div class='error' ng-show='registerAccountForm.password.$valid && submitted'>
+              <small class="error" ng-show="$scope.password2!==$scope.password">
+                Password mismatch!
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Email </label>
+            <input type='email'
+                   placeholder='Email'
+                   name='email'
+                   ng-model='email'
+                   ng-minlength='5'
+                   ng-maxlength='30'
+                   required />
+            <div class='error' ng-show='registerAccountForm.email.$invalid && submitted'>
+              <small class='error'
+                     ng-show='registerAccountForm.email.$error.required'>
+                Your email is required.
+              </small>
+              <small class="error" ng-show="registerAccountForm.email.$error.minlength">
+                Your email is required to be at least 5 characters
+              </small>
+              <small class="error" ng-show="registerAccountForm.email.$error.maxlength">
+                Your email cannot be longer than 30 characters
+              </small>
+            </div>
+          </div>
+        </div>
+
+
+
+        <button type="submit" class="button radius">Register</button>
+
+        {{password}} + {{password2}} = {{submitted}}
+      </fieldset>
+    </form>
+    <button ng-click="getUsernameList()" type="button" class="button radius">getUser</button>
+    {{usernameList}}
+  </div>
+</div>

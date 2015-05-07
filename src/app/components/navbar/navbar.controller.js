@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('project')
-  .controller('NavbarCtrl', function ($scope) {
+angular.module('gainmaster')
+  .controller('NavbarController', function ($scope) {
     $scope.date = new Date();
+    
+
+
   });

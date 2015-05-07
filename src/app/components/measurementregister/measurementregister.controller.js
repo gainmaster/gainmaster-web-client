@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('MainController', function ($scope) {
+  .controller('MeasurementRegisterController', function ($scope) {
     $scope.awesomeThings = [
       {
         'title': 'AngularJS',
