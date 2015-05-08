@@ -4,9 +4,10 @@ angular.module('gainmaster').factory(
   'accountFactory',
   function( $http, $q ) {
 
-    var urlBase = 'http://api.hesjevik.im/';
-    var userList = [];
-    var users = [];
+    var urlBase   = 'http://api.hesjevik.im/';
+    var userList  = [];
+    var users     = [];
+    var user      = [];
 
     function userHasToken() {
       if( user.token !== null ) {
@@ -15,25 +16,22 @@ angular.module('gainmaster').factory(
       return false;
     }
 
-    function addUser( username, password, email){
-      var request = $http({
-        method: 'post',
-        url: urlBase +'users/',
-        headers:{
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-        },
+    function addUser( name, username, password, email){
+      addRemoteUser( name, username, password, email);
 
-        data: {
-          name:'bjarneper',
-          username:username,
-          password:password,
-          email:email
-        }
-      });
-      return(request.then(handleSuccess, handleError));
     }
 
+    function getUsernameList(){
+      userList = [];
+      getUsers()
+        .then( function (userData){applyRemoteData(userData);
+        }).then(function (){generateUsernameList()});
+      return userList;
+    }
+
+    function applyRemoteDataADD( userData ) {
+      user = userData;
+    }
 
     function getUser( ID ) {
       var request = $http({
@@ -57,14 +55,28 @@ angular.module('gainmaster').factory(
       return(request.then(handleSuccess, handleError));
     }
 
-    function getUsernameList(){
-      getUsers()
-        .then( function (userData){applyRemoteData(userData);
-        }).then(function (){generateUsernameList()});
-      return userList;
+
+
+    function addRemoteUser( name, username, password, email){
+      var request = $http({
+      method: 'post',
+      url: urlBase +'users/',
+      headers: {'Content-Type': 'application/hal+json'},
+      data: {
+          name:name
+        , username:username
+        , email:email
+        , password:password
+
+      }
+    });
+      return(request.then(handleSuccess, handleError));
     }
 
     function handleSuccess( response ) {
+      console.log("data: " + response.data);
+      console.log("headers: " + response.headers);
+      console.log("status: " + response.status);
       return( response.data );
     }
 
@@ -77,8 +89,7 @@ angular.module('gainmaster').factory(
     }
 
     function generateUsernameList(){
-      console.log("generating list of: " + users.totalNumberOfElements);
-      for(var i = 0; i<users.totalNumberOfElements; i++){
+      for(var i = 0; i<users.numberOfElementsOnPage; i++){
         userList.push(users._embedded.users[i].username);
       }
     }

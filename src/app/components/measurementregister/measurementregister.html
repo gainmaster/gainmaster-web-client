@@ -1,8 +1,56 @@
 
 <div class="container">
-  <div ng-include="'app/components/navbar/navbar.html'"></div>
 
+  <div ng-include="'app/components/navbar/navbar.html'"></div>
   <div class='row'>
-  register measurement site
+    <form name='registerMeasurementForm'  ng-submit='submitRegisterMeasurementForm()'>
+      <fieldset>
+        <legend> Register Measurement </legend>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Height in cm </label>
+            <input type='number'
+                   placeholder='Input Height'
+                   name='height'
+                   ng-model='height'
+                   min='50'
+                   max='300'/>
+            <div class='error' ng-show='registerMeasurementForm.height.$invalid && registerMeasurementForm.height.$dirty && submitted'>
+              <small class="error" ng-show="registerMeasurementForm.height.$error.min">
+                Height must be over 50 cm
+              </small>
+              <small class="error" ng-show="registerMeasurementForm.height.$error.max">
+                Height must be under 300 cm
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="large-12 columns">
+            <label> Weight in something </label>
+            <input type='number'
+                   placeholder='Input Weight'
+                   name='weight'
+                   ng-model='weight'
+                   min='50'
+                   max='300'/>
+            <div class='error' ng-show='registerMeasurementForm.weight.$invalid && submitted'>
+              <small class="error" ng-show="registerMeasurementForm.weight.$error.min">
+                Weight must be over 50 cm
+              </small>
+              <small class="error" ng-show="registerMeasurementForm.weight.$error.max">
+                Weight must be under 300 cm
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="button radius">Register</button>
+
+        {{height}} + {{weight}} = {{submitted}}
+      </fieldset>
+    </form>
   </div>
 </div>

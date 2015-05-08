@@ -3,11 +3,11 @@
 angular.module('gainmaster')
   .controller('UserLoginController', function ($scope, UserLoginService, accountFactory) {
 
-    $scope.username = "";
-    $scope.password = "";
+    $scope.username = '';
+    $scope.password = '';
     $scope.submitted      = false;
     $scope.userData = [];
-    var hashedPassword = "";
+    var hashedPassword = '';
 
     $scope.submitLoginForm = function() {
       if ($scope.loginForm.$valid) {

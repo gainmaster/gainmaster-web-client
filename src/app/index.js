@@ -1,8 +1,8 @@
 'use strict';
 
 angular.
-  module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'mm.foundation', 'oauth'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+  module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'mm.foundation'])
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
       $stateProvider
         .state('home', {
           url: '/',
@@ -19,6 +19,11 @@ angular.
           templateUrl: 'app/components/measurementregister/measurementregister.html',
           controller: 'MeasurementRegisterController'
         })
+        .state('measurementhistory', {
+          url: '/measurementhistory',
+          templateUrl: 'app/components/measurementhistory/measurementhistory.html',
+          controller: 'MeasurementHistoryController'
+        })
         .state('userregister', {
           url: '/register',
           templateUrl: 'app/components/userregister/userregister.html',
@@ -27,5 +32,6 @@ angular.
         ;
 
       $urlRouterProvider.otherwise('/');
+      $httpProvider.defaults.useXDomain = true;
     })
 ;
