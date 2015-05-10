@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'mm.foundation', 'angular-oauth2'])
+module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'mm.foundation', 'angular-oauth2', 'ipCookie'])
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $stateProvider
       .state('home', {
@@ -40,5 +40,13 @@ module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.rou
       clientSecret: 'secret',
       grantPath: '/oauth/token',
       revokePath: '/oauth/revoke'
+    });
+  }])
+  .config(['OAuthTokenProvider', function(OAuthTokenProvider) {
+    OAuthTokenProvider.configure({
+      name: 'mytoken',
+      options: {
+        secure: false
+      }
     });
   }]);

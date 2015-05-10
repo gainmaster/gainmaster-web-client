@@ -32,10 +32,16 @@ angular.module('gainmaster')
         password: 'steinar'
       }
 
-      OAuth.getAccessToken(user).then(function(response) {
-        //token = response.data
-        applyRemoteData(response.data);
-      });
+      if(!OAuth.isAuthenticated()){
+        console.log('User is not authenticated. Fetching token')
+        OAuth.getAccessToken(user).then(function(response) {
+          //token = response.data
+          applyRemoteData(response.data);
+        });
+      }else{
+        applyRemoteData('Aready logged in');
+        //OAuth.revokeToken();
+      }
     };
 
     function applyRemoteData(userData) {
