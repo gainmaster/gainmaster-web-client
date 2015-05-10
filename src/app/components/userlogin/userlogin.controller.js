@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('UserLoginController', function($scope, UserLoginService, accountFactory, $http, OAuth) {
+  .controller('UserLoginController', function($scope, UserLoginService, accountFactory, $http, OAuth, ipCookie) {
 
     $scope.username = '';
     $scope.password = '';
@@ -38,9 +38,11 @@ angular.module('gainmaster')
           //token = response.data
           applyRemoteData(response.data);
         });
+
       }else{
-        applyRemoteData('Aready logged in');
-        //OAuth.revokeToken();
+        applyRemoteData('Already logged in. Logging out.');
+        ipCookie.remove('mytoken');
+        //OAuth.revokeToken(); //Will not work since we don't have a /revoke endpoint yet.
       }
     };
 
