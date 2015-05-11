@@ -1,0 +1,12 @@
+.git
+.gitignore
+.bowerrc
+e2e/
+gulp/
+src/
+utility/
+.editorconfig
+.jshintrc
+*.json
+*.js
+build.sh
