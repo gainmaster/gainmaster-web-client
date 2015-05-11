@@ -13,7 +13,7 @@
             <input type='text'
                    placeholder='Username'
                    name="username"
-                   ng-model='username'
+                   ng-model='user.username'
                    ng-minlength='3'
                    ng-maxlength='30'
                    required />
@@ -37,7 +37,7 @@
             <input type='password'
                    placeholder='Password'
                    name='password'
-                   ng-model='password'
+                   ng-model='user.password'
                    ng-minlength='3'
                    ng-maxlength='30'
                    required />
@@ -58,10 +58,10 @@
 
         <button type="submit" class="button radius">Login</button>
 
-        {{username}} + {{password}} = {{submitted}}
+        {{user.username}} + {{user.password}} = {{submitted}}
       </fieldset>
     </form>
     <button ng-click="getUser(1)" type="button" class="button radius">Authorize</button>
-    {{userData}}
+    {{userData}}, isAuthenticated = {{authed}}
   </div>
 </div>

@@ -24,10 +24,5 @@ describe('accountFactory', function(){
   });
 
 
-  it('should get result from getUser Function', function (){
-    var result = accountFactory.getUser(1);
-    expect(result.name).toBe('Kent Roger');
-  });
-
 
 });
