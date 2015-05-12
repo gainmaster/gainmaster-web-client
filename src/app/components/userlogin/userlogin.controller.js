@@ -1,33 +1,41 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('UserLoginController', function($scope, tokenFactory, accountFactory, $http, OAuth, ipCookie) {
+  .controller('UserLoginController', function($scope, $location, OAuth) {
 
     $scope.submitted = false;
     $scope.userData = [];
-    var hashedPassword = '';
-    $scope.authed = OAuth.isAuthenticated();
+    $scope.userLoggedIn = OAuth.isAuthenticated();
     $scope.user = {};
 
+
     $scope.submitLoginForm = function() {
+      $scope.loginForm.username.$setViewValue('aaaa');
+      /*
       if ($scope.loginForm.$valid) {
         //hash n salt?
-        hashedPassword = $scope.user.password;
         $scope.submitted = true;
-        tokenFactory.loginUser($scope.user.username, hashedPassword);
+
+          OAuth.getAccessToken($scope.user).then(function(response){
+          console.log(response.data);
+            applyRemoteData(response.data);
+            $scope.userLoggedIn = OAuth.isAuthenticated();
+            $location.path('/');
+          });
       } else {
         $scope.submitted = true;
+        $scope.loginForm.username.$setViewValue('aaaa');
       }
+      */
     };
 
-    $scope.getUser = function(ID) {
-      //accountFactory.getUser(ID)
-      //  .then( function (userData){applyRemoteData(userData);
-      //  });
-
-
-
-    };
+    $scope.deleteCookie = function(){
+      OAuth.revokeToken().then(function(response){
+      console.log(response.data);
+      console.log(OAuth.isAuthenticated());
+      $scope.userLoggedIn = OAuth.isAuthenticated();
+      });
+    }
 
     function applyRemoteData(userData) {
       $scope.userData = userData;

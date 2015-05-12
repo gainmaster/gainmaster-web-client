@@ -4,10 +4,11 @@ angular.module('gainmaster').factory(
   'accountFactory',
   function( $http, $q ) {
 
-    var urlBase   = 'http://api.hesjevik.im/';
-    var userList  = [];
-    var users     = [];
-    var user      = [];
+    var urlBase       = 'http://api.hesjevik.im/';
+    var usernameList  = [];
+    var users         = [];
+    var user          = [];
+    var emailList     = [];
 
     function userHasToken() {
       if( user.token !== null ) {
@@ -22,15 +23,19 @@ angular.module('gainmaster').factory(
     }
 
     function getUsernameList(){
-      userList = [];
+      usernameList = [];
       getUsers()
         .then( function (userData){applyRemoteData(userData);
         }).then(function (){generateUsernameList()});
-      return userList;
+      return usernameList;
     }
 
-    function applyRemoteDataADD( userData ) {
-      user = userData;
+    function getEmailList(){
+      emailList = [];
+      getUsers()
+        .then( function (userData){applyRemoteData(userData);
+        }).then(function (){generateEmailList()});
+      return emailList;
     }
 
     function getUser( ID ) {
@@ -92,6 +97,13 @@ angular.module('gainmaster').factory(
       for(var i = 0; i<users.numberOfElementsOnPage; i++){
         userList.push(users._embedded.users[i].username);
       }
+    }
+
+    function generateEmailList(){
+        for(var i = 0; i<users.numberOfElementsOnPage; i++){
+          emailList.push(users._embedded.users[i].email);
+
+        }
     }
 
     //Functions not listed here will be private

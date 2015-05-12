@@ -14,18 +14,18 @@
                    placeholder='Name'
                    name="name"
                    ng-model='name'
-                   ng-minlength='3'
-                   ng-maxlength='50'
+                   ng-minlength='2'
+                   ng-maxlength='255'
                    required />
             <div class='error' ng-show='registerAccountForm.name.$invalid && submitted'>
               <small class='error' ng-show='registerAccountForm.name.$error.required'>
                 Your name is required.
               </small>
               <small class='error' ng-show='registerAccountForm.name.$error.minlength'>
-                Your name is required to be at least 3 characters
+                Your name is required to be at least 2 characters
               </small>
               <small class='error' ng-show='registerAccountForm.name.$error.maxlength'>
-                Your name cannot be longer than 50 characters
+                Your name cannot be longer than 255 characters
               </small>
             </div>
           </div>
@@ -40,8 +40,8 @@
                    placeholder='Username'
                    name='username'
                    ng-model='username'
-                   ng-minlength='3'
-                   ng-maxlength='30'
+                   ng-minlength='2'
+                   ng-maxlength='255'
                    required />
             <div class='error' ng-show='registerAccountForm.username.$valid && submitted'>
               <small class='error' ng-show='userExist'>
@@ -53,10 +53,10 @@
                 Your name is required.
               </small>
               <small class='error' ng-show='registerAccountForm.username.$error.minlength'>
-                Your name is required to be at least 3 characters
+                Your name is required to be at least 2 characters
               </small>
               <small class='error' ng-show='registerAccountForm.username.$error.maxlength'>
-                Your name cannot be longer than 30 characters
+                Your name cannot be longer than 255 characters
               </small>
             </div>
           </div>
@@ -69,8 +69,8 @@
                    placeholder='Password'
                    name='password'
                    ng-model='password'
-                   ng-minlength='3'
-                   ng-maxlength='30'
+                   ng-minlength='2'
+                   ng-maxlength='255'
                    required />
             <div class='error' ng-show='registerAccountForm.password.$invalid && submitted'>
               <small class='error'
@@ -78,10 +78,10 @@
                 Your password is required.
               </small>
               <small class="error" ng-show="registerAccountForm.password.$error.minlength">
-                Your password is required to be at least 3 characters
+                Your password is required to be at least 2 characters
               </small>
               <small class="error" ng-show="registerAccountForm.password.$error.maxlength">
-                Your password cannot be longer than 30 characters
+                Your password cannot be longer than 255 characters
               </small>
             </div>
           </div>
@@ -94,8 +94,8 @@
                    placeholder='Repeat Password'
                    name='password2'
                    ng-model='password2'
-                   ng-minlength='3'
-                   ng-maxlength='30'
+                   ng-minlength='2'
+                   ng-maxlength='255'
                    required />
             <div class='error' ng-show='registerAccountForm.password2.$invalid && submitted'>
               <small class='error'
@@ -103,10 +103,10 @@
                 Your password is required.
               </small>
               <small class="error" ng-show="registerAccountForm.password2.$error.minlength">
-                Your password is required to be at least 3 characters
+                Your password is required to be at least 2 characters
               </small>
               <small class="error" ng-show="registerAccountForm.password2.$error.maxlength">
-                Your password cannot be longer than 30 characters
+                Your password cannot be longer than 255 characters
               </small>
             </div>
             <div class='error' ng-show='registerAccountForm.password.$valid && submitted'>
