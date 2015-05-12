@@ -58,11 +58,11 @@
           </div>
         </div>
 
-        <button type="submit" ng-click="loginForm.username.$setViewValue('aaaaa')" class="button radius">Login</button>
+        <button type="submit" class="button radius">Login</button>
       </fieldset>
     </form>
   </div>
-  {{user.username}}{{loginForm.username.$valid}}{{loginForm.username.$invalid}}
+
   <div class='row' ng-show='userLoggedIn'>
     <br><br>
     <button type="button" ng-click='deleteCookie()' class="button radius">Logout</button>

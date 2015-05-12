@@ -10,12 +10,9 @@ angular.module('gainmaster')
 
 
     $scope.submitLoginForm = function() {
-      $scope.loginForm.username.$setViewValue('aaaa');
-      /*
       if ($scope.loginForm.$valid) {
         //hash n salt?
         $scope.submitted = true;
-
           OAuth.getAccessToken($scope.user).then(function(response){
           console.log(response.data);
             applyRemoteData(response.data);
@@ -24,9 +21,7 @@ angular.module('gainmaster')
           });
       } else {
         $scope.submitted = true;
-        $scope.loginForm.username.$setViewValue('aaaa');
       }
-      */
     };
 
     $scope.deleteCookie = function(){
@@ -40,4 +35,5 @@ angular.module('gainmaster')
     function applyRemoteData(userData) {
       $scope.userData = userData;
     }
+    
   });
