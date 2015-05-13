@@ -1,0 +1,31 @@
+<div class="container">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+  <style>
+    select {
+      width: 10%;
+    }
+  </style>
+  <div ng-include="'app/components/navbar/navbar.html'"></div>
+
+  <div class='row'>
+    <h2>Information</h2>
+    <ul>
+      <li>
+        Name: {{ user.name }}
+      </li>
+      <li>
+        Username: {{ user.username }}
+      </li>
+      <li>
+        Email: {{ user.email }}
+      </li>
+    </ul>
+    <h2>Measurements</h2>
+    <ul>
+      <li ng-class="{ active: isActive('/measurementregister') }"><a ng-href="#/measurementregister">Register Measurement</a></li>
+      <li ng-class="{ active: isActive('/measurementhistory') }"><a ng-href="#/measurementhistory">Measurement History</a></li>
+    </ul>
+  </div>
+</div>

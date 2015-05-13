@@ -2,118 +2,59 @@
 
 angular.module('gainmaster').factory(
   'accountFactory',
-  function( $http, $q ) {
+  function($http, $q, OAuthToken) {
 
-    var urlBase       = 'http://api.hesjevik.im/';
-    var usernameList  = [];
-    var users         = [];
-    var user          = [];
-    var emailList     = [];
+    var url = 'http://localhost:8080/users/';
+    var headers = {
+      'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
+    };
 
-    function userHasToken() {
-      if( user.token !== null ) {
-        return true;
-      }
-      return false;
-    }
+    //REQUESTS
+    function getUserInfo(username) {
+        var request = $http({
+          method: 'GET',
+          url: url + username,
+          headers
+        });
+        return (request.then(handleSuccess, handleError));
+    };
 
-    function addUser(userInput){
-      addRemoteUser(userInput);
-
-    }
-
-    function getUsernameList(){
-      usernameList = [];
-      getUsers()
-        .then( function (userData){applyRemoteData(userData);
-        }).then(function (){generateUsernameList()});
-      return usernameList;
-    }
-
-    function getEmailList(){
-      emailList = [];
-      getUsers()
-        .then( function (userData){applyRemoteData(userData);
-        }).then(function (){generateEmailList()});
-      return emailList;
-    }
-
-    function getUser( ID ) {
+    function addUser(input) {
       var request = $http({
-        method: 'get',
-        url: urlBase +'users/' + ID,
-        params: {
-          action: 'get'
+        method: 'post',
+        url: urlBase + 'users/',
+        headers: {
+          'Content-Type': 'application/hal+json'
+        },
+        data: {
+          name: input.name,
+          username: input.username,
+          email: input.email,
+          password: input.password
         }
       });
-    return(request.then(handleSuccess, handleError));
-    }
+      return (request.then(handleSuccess, handleError));
+    };
 
-    function getUsers() {
-      var request = $http({
-        method: 'get',
-        url: urlBase +'users/',
-        params: {
-          action: 'get'
-        }
-      });
-      return(request.then(handleSuccess, handleError));
-    }
-
-
-
-    function addRemoteUser(input){
-      var request = $http({
-      method: 'post',
-      url: urlBase +'users/',
-      headers: {'Content-Type': 'application/hal+json'},
-      data: {
-          name:input.name
-        , username:input.username
-        , email:input.email
-        , password:input.password
-
-      }
-    });
-      return(request.then(handleSuccess, handleError));
-    }
-
-    function handleSuccess( response ) {
-      console.log("data: " + response.data);
-      console.log("headers: " + response.headers);
+    //RESPONSE HANDLING
+    function handleSuccess(response) {
       console.log("status: " + response.status);
-      return( response.data );
-    }
+      console.log(response.data)
+      return response.data;
+    };
 
-    function handleError( response ) {
-      return( $q.reject( response.data.message ) );
-    }
-
-    function applyRemoteData( userData ) {
-      users = userData;
-    }
-
-    function generateUsernameList(){
-      for(var i = 0; i<users.numberOfElementsOnPage; i++){
-        userList.push(users._embedded.users[i].username);
+    function handleError(response) {
+      if (response.status == '401') {
+        console.log('NOT ALLOWED');
       }
-    }
+      console.log(response);
+      //return ($q.reject(response.data.message));
+    };
 
-    function generateEmailList(){
-        for(var i = 0; i<users.numberOfElementsOnPage; i++){
-          emailList.push(users._embedded.users[i].email);
-
-        }
-    }
-
-    //Functions not listed here will be private
+    //PUBLIC FUNCTIONS
     return ({
-      userHasToken: userHasToken,
-      getUser: getUser,
-      getUsers: getUsers,
+      getUserInfo: getUserInfo,
       addUser: addUser,
-      getUsernameList: getUsernameList
     });
-
   }
 );

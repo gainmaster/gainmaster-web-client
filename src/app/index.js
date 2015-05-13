@@ -14,6 +14,11 @@ module('gainmaster', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.rou
         templateUrl: 'app/components/userlogin/userlogin.html',
         controller: 'UserLoginController'
       })
+      .state('mypage', {
+        url: '/mypage',
+        templateUrl: 'app/components/mypage/mypage.html',
+        controller: 'MypageController'
+      })
       .state('measurementregister', {
         url: '/measurementregister',
         templateUrl: 'app/components/measurementregister/measurementregister.html',

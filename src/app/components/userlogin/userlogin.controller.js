@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('UserLoginController', function($scope, $location, OAuth) {
+  .controller('UserLoginController', function($scope, $location, OAuth, accountFactory) {
 
     $scope.submitted = false;
     $scope.userData = [];
@@ -26,6 +26,10 @@ angular.module('gainmaster')
       OAuth.revokeToken().then(function(response){
       $scope.userLoggedIn = OAuth.isAuthenticated();
       });
+    }
+
+    $scope.getUserInfo = function(){
+        console.log(accountFactory.getUserInfo('steinar'));
     }
 
     function applyRemoteData(userData) {

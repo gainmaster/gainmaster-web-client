@@ -7,16 +7,23 @@
 
   <section class="top-bar-section">
     <ul class="right">
-      <li ng-class="{ active: isActive('') }"><a ng-href="#">Home</a></li>
-      <li ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
-      <li ng-class="{ active: isActive('/register') }"><a ng-href="#/register">Register</a></li>
-      <li ng-class="{ active: isActive('/measurementregister') }"><a ng-href="#/measurementregister">Register Measurement</a></li>
-      <li ng-class="{ active: isActive('/measurementhistory') }"><a ng-href="#/measurementhistory">Measurement History</a></li>
-      <li ng-class="{ active: isActive('/contact') }"><a ng-href="#/contact">Contact</a></li>
+      <li ng-class="{ active: isActive('') }"><a ng-href="/">Home</a></li>
+
+      <div ng-hide="isAuthenticated()">
+        <li ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
+        <li ng-class="{ active: isActive('/register') }"><a ng-href="#/register">Register</a></li>
+      </div>
+
+      <div ng-show="isAuthenticated()">
+        <li ng-class="{ active: isActive('/mypage') }"><a ng-href="#/mypage">My page</a></li>
+      </div>
+
     </ul>
     <ul class="left">
+      <div ng-show="isAuthenticated()">
+        <li><a ng-href="#" ng-click="logout()">Log out</a></li>
+      </div>
       <li><a ng-href="#">Current date: {{ date | date:'yyyy-MM-dd' }}</a></li>
     </ul>
   </section>
-
 </nav>

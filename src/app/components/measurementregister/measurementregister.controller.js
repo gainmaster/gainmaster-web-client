@@ -16,8 +16,4 @@ angular.module('gainmaster')
         $scope.submitted = true;
       }
     };
-
-
-
-
   });
