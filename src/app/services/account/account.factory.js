@@ -17,8 +17,8 @@ angular.module('gainmaster').factory(
       return false;
     }
 
-    function addUser( name, username, password, email){
-      addRemoteUser( name, username, password, email);
+    function addUser(userInput){
+      addRemoteUser(userInput);
 
     }
 
@@ -62,16 +62,16 @@ angular.module('gainmaster').factory(
 
 
 
-    function addRemoteUser( name, username, password, email){
+    function addRemoteUser(input){
       var request = $http({
       method: 'post',
       url: urlBase +'users/',
       headers: {'Content-Type': 'application/hal+json'},
       data: {
-          name:name
-        , username:username
-        , email:email
-        , password:password
+          name:input.name
+        , username:input.username
+        , email:input.email
+        , password:input.password
 
       }
     });

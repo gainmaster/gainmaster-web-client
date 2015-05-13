@@ -1,87 +1,51 @@
-
-
-describe('Testing UserLoginController', function(){
-  var $scope, $location, oauth, $controller;
+describe('Testing UserLoginController:', function(){
 
   beforeEach(angular.mock.module('gainmaster'));
+  beforeEach(module('gulpAngular'));
+  var $scope, $location, OAuth, $controller;
 
   //INJECT
-  beforeEach(inject(function($compile, $rootScope, _$controller_, OAuth){
+  beforeEach(inject(function($compile, $templateCache, $rootScope, _$controller_, OAuth){
     $scope = $rootScope.$new();
     $controller = _$controller_;
     $controller('UserLoginController', {$scope: $scope, $location: $location, OAuth: OAuth});
 
-    var element = angular.element(
-      '<form name="loginForm">' +
-      '<input ng-model="user.username" name="username" ng-minlength="2" />' +
-      '</form>'
-    );
-    $scope.model = { username: null }
+    templateHtml = $templateCache.get('app/components/userlogin/userlogin.html')
+    element = angular.element(templateHtml);
     $compile(element)($scope);
     loginform = $scope.loginForm;
-
-
-
+    $scope.$apply()
   }));
-  describe('username', function() {
-    it('should pass with valid input', function() {
+
+  describe('test loginform ', function(){
+
+    it('should pass  with valid username', function() {
       loginform.username.$setViewValue('aa');
       $scope.$digest();
       expect($scope.user.username).toEqual('aa');
       expect(loginform.username.$valid).toBe(true);
     });
-    it('should not pass with unvalid input', function() {
+
+    it('should not pass with unvalid username', function() {
       loginform.username.$setViewValue('a');
       $scope.$digest();
       expect($scope.user.username).toBeUndefined();
       expect(loginform.username.$valid).toBe(false);
     });
-  });
-  //logging in
-  it('should have function submitLoginForm', function() {
-    expect(angular.isFunction($scope.submitLoginForm)).toBe(true);
-  });
 
-  it('ensure invalid usernames are caught', function() {
-    var invalidusernames = [
-        'a'
-      , 'a b'
-      , ''
-      ];
-  });
-  it('ensure valid username pass validation', function() {
-    var validusernames = [
-        'ab'
-      , 'abc'
-      , 'ab-c'
-      ];
-  });
+    it('should pass with valid password', function() {
+      loginform.password.$setViewValue('aa');
+      $scope.$digest();
+      expect($scope.user.password).toEqual('aa');
+      expect(loginform.password.$valid).toBe(true);
+    });
 
-  it('ensure invalid passwords are caught', function() {
-    var invalidpasswords = [
-        'a'
-      , 'a b'
-      , ''
-      ];
+    it('should not pass with unvalid password', function() {
+      loginform.password.$setViewValue('a');
+      $scope.$digest();
+      expect($scope.user.password).toBeUndefined();
+      expect(loginform.password.$valid).toBe(false);
+    });
   });
-  it('ensure valid passwords pass validation', function() {
-    var validpasswords = [
-        'ab'
-      , 'a@b'
-      ];
-  });
-
-
-  it('should have function deleteCookie', function() {
-    expect(angular.isFunction($scope.deleteCookie)).toBe(true);
-  });
-
-
-  it('store input in user array', function() {
-    $scope.user.username = 'steinar';
-    $scope.user.password = 'steinar';
-    expect($scope.user).toEqual(Object({"username":"steinar","password":"steinar"}));
-  });
-
 
 });

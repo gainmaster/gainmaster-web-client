@@ -3,11 +3,8 @@
 angular.module('gainmaster')
   .controller('UserRegisterController', function ($scope, accountFactory) {
 
-    $scope.name       = '';
-    $scope.username   = '';
-    $scope.password   = '';
     $scope.password2  = '';
-    $scope.email      = '';
+    $scope.user       = {};
 
     $scope.submitted    = false;
     $scope.userExist    = false;
@@ -20,9 +17,15 @@ angular.module('gainmaster')
       if ($scope.registerAccountForm.$valid) {
         $scope.submitted = true;
         if(findUsername()!==true) {
-          hashedPassword = $scope.password;
+          hashedPassword = $scope.user.password;
           $scope.userExist = false;
-          accountFactory.addUser( $scope.name, $scope.username, hashedPassword, $scope.email );
+          var userToRegister ={
+              name: $scope.user.name
+            , username: $scope.user.username
+            , password: hashedPassword
+            , email: $scope.user.email}
+            console.log(userToRegister);
+          accountFactory.addUser(userToRegister);
         }else{
           $scope.userExist = true;
         }
