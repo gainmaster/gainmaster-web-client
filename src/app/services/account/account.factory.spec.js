@@ -11,18 +11,7 @@ describe('accountFactory', function(){
     });
   });
 
-  it('should have an getUser function', function () {
-    expect(angular.isFunction(accountFactory.getUser)).toBe(true);
+  it('should have an getUserInfo function', function () {
+    expect(angular.isFunction(accountFactory.getUserInfo)).toBe(true);
   });
-
-  it('should have an getUsers function', function () {
-    expect(angular.isFunction(accountFactory.getUsers)).toBe(true);
-  });
-
-  it('should have an userHasToken function', function () {
-    expect(angular.isFunction(accountFactory.userHasToken)).toBe(true);
-  });
-
-
-
 });
