@@ -12,24 +12,24 @@ angular.module('gainmaster')
     $scope.submitLoginForm = function() {
       if ($scope.loginForm.$valid) {
         $scope.submitted = true;
-          OAuth.getAccessToken($scope.user).then(function(response){
-            applyRemoteData(response.data);
-            $scope.userLoggedIn = OAuth.isAuthenticated();
-            $location.path('/');
-          });
+        OAuth.getAccessToken($scope.user).then(function(response) {
+          applyRemoteData(response.data);
+          $scope.userLoggedIn = OAuth.isAuthenticated();
+          $location.path('/');
+        });
       } else {
         $scope.submitted = true;
       }
     };
 
-    $scope.deleteCookie = function(){
-      OAuth.revokeToken().then(function(response){
-      $scope.userLoggedIn = OAuth.isAuthenticated();
+    $scope.deleteCookie = function() {
+      OAuth.revokeToken().then(function(response) {
+        $scope.userLoggedIn = OAuth.isAuthenticated();
       });
     }
 
-    $scope.getUserInfo = function(){
-        console.log(accountFactory.getUserInfo('steinar'));
+    $scope.getUserInfo = function() {
+      console.log(accountFactory.getUserInfo('steinar'));
     }
 
     function applyRemoteData(userData) {

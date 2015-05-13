@@ -5,16 +5,15 @@ angular.module('gainmaster').factory(
   function($http, $q, OAuthToken) {
 
     var url = 'http://localhost:8080/users/';
-    var headers = {
-      'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
-    };
 
     //REQUESTS
     function getUserInfo(username) {
         var request = $http({
-          method: 'GET',
+          method: 'get',
           url: url + username,
-          headers
+          headers: {
+             'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
+          }
         });
         return (request.then(handleSuccess, handleError));
     };
@@ -22,7 +21,7 @@ angular.module('gainmaster').factory(
     function addUser(input) {
       var request = $http({
         method: 'post',
-        url: urlBase + 'users/',
+        url: url,
         headers: {
           'Content-Type': 'application/hal+json'
         },
