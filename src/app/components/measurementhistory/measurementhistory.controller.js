@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('MeasurementHistoryController', function ($scope, measurementFactory, accountFactory) {
+  .controller('MeasurementHistoryController', function ($scope, $controller, measurementFactory, accountFactory) {
+
+    angular.extend(this, $controller('BaseController', {$scope: $scope}));
 
     $scope.selectedMeasurement = '';
     $scope.showArray = false;

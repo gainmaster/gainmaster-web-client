@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('MeasurementRegisterController', function ($scope, measurementFactory) {
+  .controller('MeasurementRegisterController', function ($scope, $controller, measurementFactory) {
 
+    angular.extend(this, $controller('BaseController', {$scope: $scope}));
 
     $scope.submitted = false;
     $scope.selectedMeasurement = '';

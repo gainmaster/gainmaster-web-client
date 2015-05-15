@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('MypageController', function($scope, accountFactory, measurementFactory) {
+  .controller('MypageController', function($scope, $controller, accountFactory, measurementFactory) {
+
+    angular.extend(this, $controller('BaseController', {$scope: $scope}));
 
     accountFactory.getUserInfo('steinar').then(function(response) {
       $scope.user = response;
