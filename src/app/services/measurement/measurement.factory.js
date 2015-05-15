@@ -2,7 +2,7 @@
 
 angular.module('gainmaster').factory(
   'measurementFactory',
-  function( $http, $q ) {
+  function( $http, $q, OAuthToken) {
 
     var urlBase = 'http://api.hesjevik.im/';
     var measurements = [];
@@ -12,57 +12,58 @@ angular.module('gainmaster').factory(
 
     //public functions
 
-    function addMeasurements(formArray){
-    //split array to fit remote http call
+    function addMeasurement(formArray){
+      addMeasurementToRemote(formArray);
     }
 
 
     function getMeasurements(){
       getMeasurementsFromRemote()
         .then( function (incomingData){applyRemoteData(incomingData);
-        }).then(function (){generateMeasurementsArray()});
+        });
       return measurements;
     }
     function getMeasurement(){
       getMeasurementsFromRemote()
         .then( function (incomingData){applyRemoteData(incomingData);
-        }).then(function (){generateMeasurementsArray()});
+        });
       return measurements;
     }
     // private REST functions
 
-    function addMeasurementToRemote(ID, property, magnitude, unit){
+    function addMeasurementToRemote(input){
       var request = $http({
-        method: 'post',
-        url: urlBase +'/users/'+ ID +'/measurements',
-        data:{
-            'property' : property
-          , 'magnitude': magnitude
-          , 'unit'     : unit
+        method: 'put',
+        url: urlBase +'users/'+ 'steinar' +'/measurements',
+        headers: {
+           'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }
-
-
+        ,data:{
+            'property' : input.property
+          , 'magnitude': input.magnitude
+          , 'unit'     : input.unit
+        }
       });
       return(request.then(handleSuccess, handleError));
     }
 
-    function getMeasurementFromRemote( ID, property ) {
+    function getMeasurementFromRemote( property ) {
       var request = $http({
         method: 'get',
-        url: urlBase +'/users/'+ ID +'/' + property,
-        params: {
-          action: 'get'
+        url: urlBase +'/users/'+ 'steinar' +'/' + property,
+        headers: {
+           'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }
       });
     return(request.then(handleSuccess, handleError));
     }
 
-    function getMeasurementsFromRemote(ID) {
+    function getMeasurementsFromRemote() {
       var request = $http({
         method: 'get',
-        url: urlBase +'/users/'+ ID +'/measurements',
-        params: {
-          action: 'get'
+        url: urlBase +'users/'+ 'steinar' +'/measurements',
+        headers: {
+           'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }
       });
       return(request.then(handleSuccess, handleError));
@@ -75,24 +76,22 @@ angular.module('gainmaster').factory(
       return( response.data );
     }
 
-    function handleError( response ) {
-      return( $q.reject( response.data.message ) );
-    }
+    function handleError(response) {
+      if (response.status == '401') {
+        console.log('NOT ALLOWED');
+      }
+      console.log(response);
+      //return ($q.reject(response.data.message));
+    };
 
     function applyRemoteData( incomingData ) {
       remoteData = incomingData;
     }
 
-    function generateUsernameList(){
-      for(var i = 0; i<users.totalNumberOfElements; i++){
-        userList.push(users._embedded.users[i].username);
-      }
-    }
-
     //Functions not listed here will be private
     return ({
       getMeasurement: getMeasurement,
-      addMeasurements: addMeasurements,
+      addMeasurement: addMeasurement,
       getMeasurements: getMeasurements
     });
 

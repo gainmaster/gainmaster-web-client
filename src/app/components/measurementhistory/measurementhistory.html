@@ -1,14 +1,11 @@
 <div class="container">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
+  <div ng-include="'app/components/navbar/navbar.html'"></div>
   <style>
-    select {
-      width: 10%;
+    select{
+      max-width: 5.5rem;
     }
   </style>
-  <div ng-include="'app/components/navbar/navbar.html'"></div>
-
   <div class='row'>
     <br>
     <select ng-model="selectedArray">
@@ -16,7 +13,6 @@
       <option value="height">Height</option>
       <option value="weight">Weight</option>
     </select>
-    //filter, sortby
     <br>
   </div>
 
@@ -26,12 +22,12 @@
       <div ng-show='showArray("weight")'>
         <table>
           <tr>
-            <td>Date</i>
-
-                            </button></td>
-            <td>Weight</td>
+            <th><a href="" ng-click="predicate = 'date'; reverse=false">Date</a>
+          (<a href="" ng-click="predicate = '-date'; reverse=false">^</a>)</th>
+            <th><a href="" ng-click="predicate = 'magnitude'; reverse=false">Weight</a>
+          (<a href="" ng-click="predicate = '-magnitude'; reverse=false">^</a>)</th>
           </tr>
-          <tr ng-repeat="x in weightArray | orderBy : 'date'">
+          <tr ng-repeat="x in weightArray | orderBy:predicate:reverse">
             <td>{{ x.date }}</td>
             <td>{{ x.magnitude }} gram</td>
           </tr>
@@ -41,24 +37,29 @@
       <div ng-show='showArray("height")'>
         <table>
           <tr>
-            <td>Date</td>
-            <td>Height</td>
+            <th><a href="" ng-click="predicate = 'date'; reverse=false">Date</a>
+          (<a href="" ng-click="predicate = '-date'; reverse=false">^</a>)</th>
+            <th><a href="" ng-click="predicate = 'magnitude'; reverse=false">Height</a>
+          (<a href="" ng-click="predicate = '-magnitude'; reverse=false">^</a>)</th>
           </tr>
-          <tr ng-repeat="x in heightArray | orderBy : 'date'">
+          <tr ng-repeat="x in heightArray | orderBy:predicate:reverse">
             <td>{{ x.date }}</td>
             <td>{{ x.magnitude }} cm</td>
           </tr>
         </table>
-      </div
+      </div>
 
       <div ng-show='showArray("all")'>
         <table>
           <tr>
-            <td>Date<button class="btn btn-mini btn-link" ng-click="sort('date')"><i class="icon-sort"></td>
-            <td>Property<button class="btn btn-mini btn-link" ng-click="sort('property')"><i class="icon-sort"></td>
-            <td>Height<button class="btn btn-mini btn-link" ng-click="sort('magnitude')"><i class="icon-sort"></td>
+            <th><a href="" ng-click="predicate = 'date'; reverse=false">Date</a>
+          (<a href="" ng-click="predicate = '-date'; reverse=false">^</a>)</th>
+            <th><a href="" ng-click="predicate = 'property'; reverse=false">Property</a>
+          (<a href="" ng-click="predicate = '-property'; reverse=false">^</a>)</th>
+          <th><a href="" ng-click="predicate = 'magnitude'; reverse=false">Magnitude</a>
+        (<a href="" ng-click="predicate = '-magnitude'; reverse=false">^</a>)</th>
           </tr>
-          <tr ng-repeat="x in userArray | orderBy:orderProp:direction">
+          <tr ng-repeat="x in userArray | orderBy:predicate:reverse">
             <td>{{ x.date }}</td>
             <td>{{ x.property }}</td>
             <td>{{ x.magnitude }}</td>
@@ -69,9 +70,6 @@
 
 
     <br>
-
-
-
   </div>
 
 </div>

@@ -3,53 +3,52 @@
 
   <div ng-include="'app/components/navbar/navbar.html'"></div>
   <div class='row'>
+    <style>
+    form {
+      max-width: 20rem;
+      margin:auto;
+    }
+    .columns {
+  padding-left: 0;
+  padding-right: 0;
+  }
+  </style>
     <form name='registerMeasurementForm'  ng-submit='submitRegisterMeasurementForm()'>
       <fieldset>
         <legend> Register Measurement </legend>
+        <select ng-model="selectedMeasurement">
+          <option value="" disabled selected>Select your option</option>
+          <option value="Height">Height</option>
+          <option value="Weight">Weight</option>
+        </select>
 
-        <div class='row'>
+
+        <div ng-hide='selectedMeasurement==""'>
           <div class="large-12 columns">
-            <label> Height in cm </label>
+            <label>Selected registration: {{selectedMeasurement}}</label>
             <input type='number'
-                   placeholder='Input Height'
-                   name='height'
-                   ng-model='height'
-                   min='50'
-                   max='300'/>
-            <div class='error' ng-show='registerMeasurementForm.height.$invalid && registerMeasurementForm.height.$dirty && submitted'>
-              <small class="error" ng-show="registerMeasurementForm.height.$error.min">
-                Height must be over 50 cm
+                   placeholder='Input Magnitude'
+                   name='magnitude'
+                   ng-model='MeasurementInput.magnitude'
+                   min='1'
+                   max='5000'/>
+            <div class='error' ng-show='registerMeasurementForm.magnitude.$invalid && registerMeasurementForm.magnitude.$dirty && submitted'>
+              <small class="error" ng-show="registerMeasurementForm.magnitude.$error.min">
+                Magnitude must be at least 1
               </small>
-              <small class="error" ng-show="registerMeasurementForm.height.$error.max">
-                Height must be under 300 cm
+              <small class="error" ng-show="registerMeasurementForm.magnitude.$error.max">
+                Magnitude must max 5000
               </small>
             </div>
           </div>
+
         </div>
+        <button type="submit" ng-hide='selectedMeasurement==""' class="button radius">Register</button>
 
-        <div class='row'>
-          <div class="large-12 columns">
-            <label> Weight in something </label>
-            <input type='number'
-                   placeholder='Input Weight'
-                   name='weight'
-                   ng-model='weight'
-                   min='50'
-                   max='300'/>
-            <div class='error' ng-show='registerMeasurementForm.weight.$invalid && submitted'>
-              <small class="error" ng-show="registerMeasurementForm.weight.$error.min">
-                Weight must be over 50 cm
-              </small>
-              <small class="error" ng-show="registerMeasurementForm.weight.$error.max">
-                Weight must be under 300 cm
-              </small>
-            </div>
-          </div>
-        </div>
+        {{MeasurementInput}}
 
-        <button type="submit" class="button radius">Register</button>
 
-        {{height}} + {{weight}} = {{submitted}}
+
       </fieldset>
     </form>
   </div>

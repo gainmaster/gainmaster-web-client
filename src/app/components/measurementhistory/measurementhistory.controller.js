@@ -3,18 +3,18 @@
 angular.module('gainmaster')
   .controller('MeasurementHistoryController', function ($scope, measurementFactory, accountFactory) {
 
-    $scope.hellooo     = 'hellooo';
-    $scope.weightArray = [{date:'idag', magnitude:'masse'},{date:'imorra', magnitude:'mindre'}];
-    $scope.heightArray = [{date:'idag', magnitude:'liten'},{date:'imorra', magnitude:'stooor'}];
-    $scope.userArray   = [{date:'idag', property:'wight',magnitude:'liten'},{date:'imorra', property:'hieght',magnitude:'stooor'}];
-    $scope.userid      = 0;
+    var measurementObject   = measurementFactory.getMeasurements();
+    $scope.measurementArray = splitObject('all');
+    $scope.weightArray      = splitObject('weight');
+    $scope.heightArray      = splitObject('height;')
 
     $scope.selectedArray = 'all';
     $scope.orderProp = 'date';
     $scope.direction = false;
 
-    $scope.showArray = function(choice) {
-      return $scope.selectedArray == choice;
+    $scope.showArray = function(selected) {
+
+      return $scope.selectedArray == selected;
     }
 
     $scope.sort = function(column) {
@@ -26,22 +26,9 @@ angular.module('gainmaster')
         }
     }
 
-
-    $scope.getAllWeight = function(){
-      accountFactory.getUser
-      $scope.weightArray = measurementFactory.getProperty(userid, 'weight');
+    function splitObject(selected) {
+      measurementObject = measurementFactory.getMeasurements();
+      
     }
-
-    $scope.getAllHeight = function(){
-      $scope.heightArray = measurementFactory.getProperty(userid, 'height');
-    }
-
-    $scope.getUserMeasurements = function(){
-      $scope.heightArray = measurementFactory.getProperty(userid, 'height');
-    }
-
-
-
-
 
   });

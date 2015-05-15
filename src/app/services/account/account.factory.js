@@ -4,7 +4,7 @@ angular.module('gainmaster').factory(
   'accountFactory',
   function($http, $q, OAuthToken) {
 
-    var url = 'http://localhost:8080/users/';
+    var url = 'http://api.hesjevik.im/users/';
 
     //REQUESTS
     function getUserInfo(username) {
