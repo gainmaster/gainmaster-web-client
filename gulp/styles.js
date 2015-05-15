@@ -10,7 +10,8 @@ var wiredep = require('wiredep').stream;
 module.exports = function(options) {
   gulp.task('styles', function () {
     var sassOptions = {
-      style: 'expanded'
+      style: 'expanded',
+      noCache: true
     };
 
     var injectFiles = gulp.src([
