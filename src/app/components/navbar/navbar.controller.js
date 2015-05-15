@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('NavbarController', function($scope, $location, OAuth) {
+  .controller('NavbarController', function($scope, $location, $window, OAuth) {
     $scope.date = new Date();
 
     $scope.isActive = function(viewLocation) {
@@ -14,6 +14,8 @@ angular.module('gainmaster')
     };
 
     $scope.logout = function() {
-      OAuth.revokeToken();
+      OAuth.revokeToken().then(function(response) {
+          $window.location.reload();
+      });
     };
   });
