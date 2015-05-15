@@ -3,8 +3,8 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
   <style>
-    select {
-      width: 10%;
+    li {
+      list-style: none;
     }
   </style>
   <div ng-include="'app/components/navbar/navbar.html'"></div>
@@ -13,16 +13,24 @@
     <h2>Information</h2>
     <ul>
       <li>
-        Name: {{ user.name }}
+        <b>Name:</b> {{ user.name }}
       </li>
       <li>
-        Username: {{ user.username }}
+        <b>Username:</b> {{ user.username }}
       </li>
       <li>
-        Email: {{ user.email }}
+        <b>Email:</b> {{ user.email }}
       </li>
     </ul>
     <h2>Measurements</h2>
+    <ul>
+      <li>
+        <b>Height:</b> {{ measurement.height }}
+      </li>
+      <li>
+        <b>Weight:</b> {{ measurement.weight }}
+      </li>
+    </ul>
     <ul>
       <li ng-class="{ active: isActive('/measurementregister') }"><a ng-href="#/measurementregister">Register Measurement</a></li>
       <li ng-class="{ active: isActive('/measurementhistory') }"><a ng-href="#/measurementhistory">Measurement History</a></li>
