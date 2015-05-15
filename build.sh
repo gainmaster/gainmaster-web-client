@@ -12,7 +12,6 @@ declare DOCKER_IMAGE_NAME="gainmaster/gainmaster-web-client"
 
 cd $PROJECT_DIRECTORY
 
-
 function download_application_dependencies
 {
 	$PROJECT_DIRECTORY/utility/bower.sh install
