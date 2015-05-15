@@ -1,10 +1,7 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('UserRegisterController', function ($scope, accountFactory) {
-
-    $scope.password2  = '';
-    $scope.user       = {};
+  .controller('UserRegisterController', function ($scope, accountFactory, $state) {
 
     $scope.submitted    = false;
     $scope.user = {};
@@ -14,9 +11,8 @@ angular.module('gainmaster')
       if ($scope.registerAccountForm.$valid) {
         $scope.submitted = true;
         //TODO Proper hashfunction
-          accountFactory.addUser(user).then(function (){
-            OAuth.getAccessToken($scope.user);
-              $location.path('/');
+          accountFactory.addUser($scope.user).then(function (){
+            $state.go('userlogin');
           });
       } else {
         $scope.submitted = true;
