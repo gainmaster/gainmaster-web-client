@@ -11,7 +11,10 @@ angular.module('gainmaster')
 
       // Refresh token when a `invalid_token` error occurs.
       if ('invalid_token' === rejection.data.error) {
-        //return OAuth.getRefreshToken();
+        //return OAuth.getRefreshToken() when included;
+        OAuth.revokeToken().then(function (){
+          $state.go('userlogin');
+        });
         return;
       }
 
@@ -20,5 +23,5 @@ angular.module('gainmaster')
     });
 
     if (!OAuth.isAuthenticated()) $state.go('userlogin'); // go to login
-    
+
   });

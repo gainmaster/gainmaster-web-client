@@ -7,7 +7,7 @@
 
   <section class="top-bar-section">
     <ul class="">
-      <li ng-class="{ active: isActive('') }"><a ng-href="/">Home</a></li>
+      <li ng-class="{ active: isActive('/') }"><a ng-href="#/">Home</a></li>
 
       <div ng-hide="isAuthenticated()">
         <li ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
@@ -16,6 +16,9 @@
 
       <div ng-show="isAuthenticated()">
         <li ng-class="{ active: isActive('/mypage') }"><a ng-href="#/mypage">My page</a></li>
+
+        <li ng-class="{ active: isActive('/measurementregister') }"><a ng-href="#/measurementregister">Register Measurement</a></li>
+        <li ng-class="{ active: isActive('/measurementhistory') }"><a ng-href="#/measurementhistory">Measurement History</a></li>
       </div>
 
     </ul>
