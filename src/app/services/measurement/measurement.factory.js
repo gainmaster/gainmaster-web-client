@@ -12,26 +12,11 @@ angular.module('gainmaster').factory(
 
     //public functions
 
-    function addMeasurement(formArray){
-      addMeasurementToRemote(formArray);
-    }
 
 
-    function getMeasurements(){
-      getMeasurementsFromRemote()
-        .then( function (incomingData){applyRemoteData(incomingData);
-        });
-      return measurements;
-    }
-    function getMeasurement(){
-      getMeasurementsFromRemote()
-        .then( function (incomingData){applyRemoteData(incomingData);
-        });
-      return measurements;
-    }
     // private REST functions
 
-    function addMeasurementToRemote(input){
+    function addMeasurement(input){
       var request = $http({
         method: 'put',
         url: urlBase +'users/'+ 'steinar' +'/measurements',
@@ -47,10 +32,10 @@ angular.module('gainmaster').factory(
       return(request.then(handleSuccess, handleError));
     }
 
-    function getMeasurementFromRemote( property ) {
+    function getMeasurement( property ) {
       var request = $http({
         method: 'get',
-        url: urlBase +'/users/'+ 'steinar' +'/' + property,
+        url: urlBase +'users/'+ 'steinar' +'/measurements/' + property,
         headers: {
            'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }
@@ -58,7 +43,7 @@ angular.module('gainmaster').factory(
     return(request.then(handleSuccess, handleError));
     }
 
-    function getMeasurementsFromRemote() {
+    function getMeasurements() {
       var request = $http({
         method: 'get',
         url: urlBase +'users/'+ 'steinar' +'/measurements',

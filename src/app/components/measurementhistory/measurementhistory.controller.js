@@ -3,18 +3,16 @@
 angular.module('gainmaster')
   .controller('MeasurementHistoryController', function ($scope, measurementFactory, accountFactory) {
 
-    var measurementObject   = measurementFactory.getMeasurements();
-    $scope.measurementArray = splitObject('all');
-    $scope.weightArray      = splitObject('weight');
-    $scope.heightArray      = splitObject('height;')
-
-    $scope.selectedArray = 'all';
-    $scope.orderProp = 'date';
+    $scope.selectedMeasurement = '';
     $scope.direction = false;
+    $scope.showArray = false;
 
-    $scope.showArray = function(selected) {
-
-      return $scope.selectedArray == selected;
+    $scope.getArray = function() {
+      measurementFactory.getMeasurement($scope.selectedMeasurement).then(function(response) {
+        $scope.measurement = response;
+        console.log($scope.measurement);
+        $scope.showArray = true;
+      });
     }
 
     $scope.sort = function(column) {
@@ -24,11 +22,6 @@ angular.module('gainmaster')
           $scope.orderProp = column;
           $scope.direction = false;
         }
-    }
-
-    function splitObject(selected) {
-      measurementObject = measurementFactory.getMeasurements();
-      
     }
 
   });

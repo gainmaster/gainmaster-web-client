@@ -9,9 +9,9 @@
       margin:auto;
     }
     .columns {
-  padding-left: 0;
-  padding-right: 0;
-  }
+      padding-left: 0;
+      padding-right: 0;
+    }
   </style>
     <form name='registerMeasurementForm'  ng-submit='submitRegisterMeasurementForm()'>
       <fieldset>
@@ -21,7 +21,6 @@
           <option value="Height">Height</option>
           <option value="Weight">Weight</option>
         </select>
-
 
         <div ng-hide='selectedMeasurement==""'>
           <div class="large-12 columns">
@@ -46,8 +45,6 @@
         <button type="submit" ng-hide='selectedMeasurement==""' class="button radius">Register</button>
 
         {{MeasurementInput}}
-
-
 
       </fieldset>
     </form>
