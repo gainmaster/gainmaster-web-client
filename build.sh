@@ -11,8 +11,6 @@ declare PROJECT_DIRECTORY=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 declare DOCKER_IMAGE_NAME="gainmaster/gainmaster-web-client"
 
 cd $PROJECT_DIRECTORY
-sudo chmod -R 777 .sass-cache 
-
 
 function download_application_dependencies
 {
