@@ -2,11 +2,41 @@
 
 angular.module('gainmaster').factory(
   'accountFactory',
-  function($http, $q, OAuthToken) {
+  function($http, $q, OAuthToken, ipCookie) {
 
     var url = 'http://api.hesjevik.im/users/';
+    var selfHref;
+    var measurementsHref;
+    var username;
 
-    //REQUESTS
+    //HREF REQUESTS
+
+    function setMeasurementsHref(url){
+      ipCookie('measurementshref', url);
+    }
+    function setSelfHref(url){
+      ipCookie('selfhref', url);
+    }
+
+    function setUsername(username) {
+      ipCookie('username', username);
+    }
+
+    function getMeasurementsHref(){
+      return measurementsHref = ipCookie('measurementshref');
+    }
+
+    function getSelfHref(){
+
+      return selfHref = ipCookie('selfhref');
+    }
+
+    function getUsername() {
+      return username = ipCookie('username');
+    }
+
+
+    // REST REQUESTS
     function getUserInfo(username) {
         var request = $http({
           method: 'get',
@@ -26,6 +56,8 @@ angular.module('gainmaster').factory(
           'Content-Type': 'application/hal+json'
         },
         data: {
+          client_id: 'admin',
+          client_secret: 'secret',
           name: input.name,
           username: input.username,
           email: input.email,
@@ -37,8 +69,6 @@ angular.module('gainmaster').factory(
 
     //RESPONSE HANDLING
     function handleSuccess(response) {
-      console.log("status: " + response.status);
-      console.log(response.data)
       return response.data;
     };
 
@@ -50,10 +80,16 @@ angular.module('gainmaster').factory(
       //return ($q.reject(response.data.message));
     };
 
-    //PUBLIC FUNCTIONS
+    //RETURN PUBLIC FUNCTIONS
     return ({
-      getUserInfo: getUserInfo,
-      addUser: addUser,
+        getUserInfo: getUserInfo
+      , addUser: addUser
+      , getMeasurementsHref: getMeasurementsHref
+      , setMeasurementsHref: setMeasurementsHref
+      , getSelfHref: getSelfHref
+      , setSelfHref: setSelfHref
+      , getUsername: getUsername
+      , setUsername: setUsername
     });
   }
 );

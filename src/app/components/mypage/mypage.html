@@ -23,10 +23,10 @@
     <h2>Measurements</h2>
     <ul>
       <li>
-        <b>Height:</b> {{ measurement.height }}
+        <b>Height:</b> {{ measurements._embedded.measurements[0].magnitude }} {{ measurements._embedded.measurements[0].unit }}
       </li>
       <li>
-        <b>Weight:</b> {{ measurement.weight }}
+        <b>Weight:</b> {{ measurements._embedded.measurements[1].magnitude }} {{ measurements._embedded.measurements[1].unit }}
       </li>
     </ul>
     <ul>

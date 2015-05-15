@@ -15,9 +15,9 @@ angular.module('gainmaster')
 
     $scope.unitFilter = function(selected) {
       if(selected == 'Height') {
-        return 'cm';
+        return 'm';
       }
-      return 'gram';
+      return 'kg';
     }
     $scope.submitRegisterMeasurementForm = function() {
       if ($scope.registerMeasurementForm.$valid) {

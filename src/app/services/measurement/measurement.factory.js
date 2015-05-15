@@ -2,31 +2,30 @@
 
 angular.module('gainmaster').factory(
   'measurementFactory',
-  function( $http, $q, OAuthToken) {
+  function( $http, $q, OAuthToken, accountFactory) {
 
     var urlBase = 'http://api.hesjevik.im/';
-    var measurements = [];
-    var height = [];
-    var weight = [];
+
+    var measurementsHref = accountFactory.getMeasurementsHref();;
     var remoteData = [];
 
-    //public functions
 
 
 
-    // private REST functions
+    // REST REQUESTS
 
     function addMeasurement(input){
       var request = $http({
         method: 'put',
-        url: urlBase +'users/'+ 'steinar' +'/measurements',
+        url: measurementsHref,
         headers: {
-           'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
+           'Authorization': 'Bearer ' + OAuthToken.getAccessToken(),
+           'Content-type' : 'Application/Json'
         }
         ,data:{
-            'property' : input.property
-          , 'magnitude': input.magnitude
-          , 'unit'     : input.unit
+            "property" : input.property
+          , "magnitude": input.magnitude
+          , "unit"     : input.unit
         }
       });
       return(request.then(handleSuccess, handleError));
@@ -35,7 +34,7 @@ angular.module('gainmaster').factory(
     function getMeasurement( property ) {
       var request = $http({
         method: 'get',
-        url: urlBase +'users/'+ 'steinar' +'/measurements/' + property,
+        url: measurementsHref +"/"+ property,
         headers: {
            'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }
@@ -46,7 +45,7 @@ angular.module('gainmaster').factory(
     function getMeasurements() {
       var request = $http({
         method: 'get',
-        url: urlBase +'users/'+ 'steinar' +'/measurements',
+        url: measurementsHref,
         headers: {
            'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
         }

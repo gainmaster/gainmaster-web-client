@@ -20,14 +20,14 @@
       <div ng-show='showArray'>
         <table>
           <tr>
-            <th><a href="" ng-click="predicate = 'date'; reverse=false">Date</a>
-          (<a href="" ng-click="predicate = '-date'; reverse=false">^</a>)</th>
-            <th><a href="" ng-click="predicate = 'magnitude'; reverse=false">Magnitude</a>
-          (<a href="" ng-click="predicate = '-magnitude'; reverse=false">^</a>)</th>
+            <th><a href="" ng-click="predicate = 'date'; reverse=true">Date</a>
+          (<a href="" ng-click="predicate = '-date'; reverse=true">^</a>)</th>
+            <th><a href="" ng-click="predicate = 'magnitude'; reverse=true">Magnitude</a>
+          (<a href="" ng-click="predicate = '-magnitude'; reverse=true">^</a>)</th>
           </tr>
-          <tr ng-repeat="x in measurement._embedded.measurements | orderBy:predicate:reverse">
-            <td>{{ x.date }}</td>
-            <td>{{ x.magnitude }}</td>
+          <tr ng-repeat="x in measurement._embedded.measurements | orderBy:date:reverse">
+            <td>{{ x.date  | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ x.magnitude }} {{ x.unit }}</td>
           </tr>
         </table>
       </div>

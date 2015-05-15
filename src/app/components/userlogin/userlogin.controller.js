@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('UserLoginController', function($scope, $location, OAuth, accountFactory) {
+  .controller('UserLoginController', function($scope, $location, OAuth, accountFactory, ipCookie) {
 
     $scope.submitted = false;
-    $scope.userData = [];
+    $scope.userData;
     $scope.userLoggedIn = OAuth.isAuthenticated();
     $scope.user = {};
 
@@ -12,10 +12,15 @@ angular.module('gainmaster')
     $scope.submitLoginForm = function() {
       if ($scope.loginForm.$valid) {
         $scope.submitted = true;
-        OAuth.getAccessToken($scope.user).then(function(response) {
-          applyRemoteData(response.data);
-          $scope.userLoggedIn = OAuth.isAuthenticated();
-          $location.path('/');
+        OAuth.getAccessToken($scope.user).then(function() {
+          accountFactory.getUserInfo($scope.user.username).then(function(response){
+            applyRemoteData(response);
+            $scope.userLoggedIn = OAuth.isAuthenticated();
+            accountFactory.setSelfHref($scope.userData._links.self.href);
+            accountFactory.setMeasurementsHref($scope.userData._links.measurements.href);
+            accountFactory.setUsername($scope.user.username);
+            $location.path('/');
+          });
         });
       } else {
         $scope.submitted = true;
@@ -26,10 +31,6 @@ angular.module('gainmaster')
       OAuth.revokeToken().then(function(response) {
         $scope.userLoggedIn = OAuth.isAuthenticated();
       });
-    }
-
-    $scope.getUserInfo = function() {
-      console.log(accountFactory.getUserInfo('steinar'));
     }
 
     function applyRemoteData(userData) {

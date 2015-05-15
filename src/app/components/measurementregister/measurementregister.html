@@ -29,23 +29,21 @@
                    placeholder='Input Magnitude'
                    name='magnitude'
                    ng-model='MeasurementInput.magnitude'
+                   step="0.01"
                    min='1'
-                   max='5000'/>
+                   max='50'/>
             <div class='error' ng-show='registerMeasurementForm.magnitude.$invalid && registerMeasurementForm.magnitude.$dirty && submitted'>
               <small class="error" ng-show="registerMeasurementForm.magnitude.$error.min">
                 Magnitude must be at least 1
               </small>
               <small class="error" ng-show="registerMeasurementForm.magnitude.$error.max">
-                Magnitude must max 5000
+                Magnitude must max 50
               </small>
             </div>
           </div>
 
         </div>
         <button type="submit" ng-hide='selectedMeasurement==""' class="button radius">Register</button>
-
-        {{MeasurementInput}}
-
       </fieldset>
     </form>
   </div>
