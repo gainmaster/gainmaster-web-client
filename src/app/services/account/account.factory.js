@@ -10,48 +10,47 @@ angular.module('gainmaster').factory(
     var username;
 
     //HREF REQUESTS
-
-    function setMeasurementsHref(url){
+    function setMeasurementsHref(url) {
       ipCookie('measurementshref', url);
-    }
-    function setSelfHref(url){
+    };
+
+    function setSelfHref(url) {
       ipCookie('selfhref', url);
-    }
+    };
 
     function setUsername(username) {
       ipCookie('username', username);
-    }
+    };
 
-    function getMeasurementsHref(){
+    function getMeasurementsHref() {
       return measurementsHref = ipCookie('measurementshref');
-    }
+    };
 
-    function getSelfHref(){
-
+    function getSelfHref() {
       return selfHref = ipCookie('selfhref');
-    }
+    };
 
     function getUsername() {
       return username = ipCookie('username');
-    }
+    };
 
 
     // REST REQUESTS
     function getUserInfo(username) {
-        var request = $http({
-          method: 'get',
-          url: url + username,
-          headers: {
-             'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
-          }
-        });
-        return (request.then(handleSuccess, handleError));
+      var request = $http({
+        method: 'GET',
+        url: url + username,
+        headers: {
+          'Authorization': 'Bearer ' + OAuthToken.getAccessToken()
+        }
+      });
+      return (request.then(handleSuccess, handleError));
     };
 
     function addUser(input) {
       var request = $http({
-        method: 'post',
-        url: 'http://api.hesjevik.im/users',
+        method: 'POST',
+        url: url,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -75,19 +74,18 @@ angular.module('gainmaster').factory(
         console.log('NOT ALLOWED');
       }
       console.log(response);
-      //return ($q.reject(response.data.message));
     };
 
     //RETURN PUBLIC FUNCTIONS
     return ({
-        getUserInfo: getUserInfo
-      , addUser: addUser
-      , getMeasurementsHref: getMeasurementsHref
-      , setMeasurementsHref: setMeasurementsHref
-      , getSelfHref: getSelfHref
-      , setSelfHref: setSelfHref
-      , getUsername: getUsername
-      , setUsername: setUsername
+      getUserInfo: getUserInfo,
+      addUser: addUser,
+      getMeasurementsHref: getMeasurementsHref,
+      setMeasurementsHref: setMeasurementsHref,
+      getSelfHref: getSelfHref,
+      setSelfHref: setSelfHref,
+      getUsername: getUsername,
+      setUsername: setUsername
     });
   }
 );

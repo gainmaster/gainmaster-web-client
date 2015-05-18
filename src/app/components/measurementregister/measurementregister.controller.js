@@ -1,20 +1,22 @@
 'use strict';
 
 angular.module('gainmaster')
-  .controller('MeasurementRegisterController', function ($scope, $controller, measurementFactory) {
+  .controller('MeasurementRegisterController', function($scope, $controller, measurementFactory) {
 
-    angular.extend(this, $controller('BaseController', {$scope: $scope}));
+    angular.extend(this, $controller('BaseController', {
+      $scope: $scope
+    }));
 
     $scope.submitted = false;
     $scope.selectedMeasurement = '';
     $scope.MeasurementInput = {
-       property: ''
-      ,magnitude:''
-      ,unit:''
+      property: '',
+      magnitude: '',
+      unit: ''
     }
 
     $scope.unitFilter = function(selected) {
-      if(selected == 'Height') {
+      if (selected == 'Height') {
         return 'm';
       }
       return 'kg';

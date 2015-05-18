@@ -18,7 +18,7 @@ angular.module('gainmaster')
         ipCookie.remove('measurementshref');
         ipCookie.remove('selfhref');
         ipCookie.remove('username');
-          $window.location.reload();
+        $window.location.reload();
       });
     };
   });

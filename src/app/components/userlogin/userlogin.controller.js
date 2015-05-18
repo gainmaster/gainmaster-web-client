@@ -13,7 +13,7 @@ angular.module('gainmaster')
       if ($scope.loginForm.$valid) {
         $scope.submitted = true;
         OAuth.getAccessToken($scope.user).then(function() {
-          accountFactory.getUserInfo($scope.user.username).then(function(response){
+          accountFactory.getUserInfo($scope.user.username).then(function(response) {
             applyRemoteData(response);
             $scope.userLoggedIn = OAuth.isAuthenticated();
             accountFactory.setSelfHref($scope.userData._links.self.href);
@@ -31,10 +31,10 @@ angular.module('gainmaster')
       OAuth.revokeToken().then(function(response) {
         $scope.userLoggedIn = OAuth.isAuthenticated();
       });
-    }
+    };
 
     function applyRemoteData(userData) {
       $scope.userData = userData;
-    }
+    };
 
   });
