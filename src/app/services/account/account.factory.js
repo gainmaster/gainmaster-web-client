@@ -51,13 +51,11 @@ angular.module('gainmaster').factory(
     function addUser(input) {
       var request = $http({
         method: 'post',
-        url: url,
+        url: 'http://api.hesjevik.im/users',
         headers: {
-          'Content-Type': 'application/hal+json'
+          'Content-Type': 'application/json'
         },
         data: {
-          client_id: 'admin',
-          client_secret: 'secret',
           name: input.name,
           username: input.username,
           email: input.email,
