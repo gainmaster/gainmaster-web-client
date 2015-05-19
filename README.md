@@ -1,4 +1,4 @@
-# Gainmaster User Service
+# Gainmaster Web Client
 
 [![Build Status](http://ci.hesjevik.im/buildStatus/icon?job=gainmaster-web-client)](http://ci.hesjevik.im/job/gainmaster-web-client/) [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg?style=plastic)][docker_hub_repository]
 
