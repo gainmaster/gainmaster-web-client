@@ -39,7 +39,7 @@ This repository contains a **Dockerfile**, and a **Vagrantfile** for local devel
 
 ```
 
-The app/components folder contains subfolder with all the system componenets.
+The app/components folder contains subfolders with the system componenets.
 Each of these subfolders contains templates, controllers and tests for the component.
 
 ## Running
