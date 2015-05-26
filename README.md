@@ -2,7 +2,7 @@
 
 [![Build Status](http://ci.hesjevik.im/buildStatus/icon?job=gainmaster-web-client)](http://ci.hesjevik.im/job/gainmaster-web-client/) [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg?style=plastic)][docker_hub_repository]
 
-This repository contains a **Dockerfile**, and a **Vagrantfile** for local development. This repository is a part of an automated build, published to the [Docker Hub][docker_hub_repository].
+This repository contains a **Dockerfile** for the Gainmaster Web Client. This repository is a part of an automated build, published to the [Docker Hub][docker_hub_repository].
 
 **Base image:** [gainmaster/nginx][docker_hub_base_image]
 
