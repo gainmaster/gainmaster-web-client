@@ -39,6 +39,9 @@ This repository contains a **Dockerfile**, and a **Vagrantfile** for local devel
 
 ```
 
+The app/components folder contains subfolder with all the system componenets.
+Each of these subfolders contains templates, controllers and tests for the component.
+
 ## Running
 
     $ npm install
@@ -48,3 +51,5 @@ This repository contains a **Dockerfile**, and a **Vagrantfile** for local devel
 ## References
 
 These references have been helpful when creating this repository:
+
+https://github.com/yeoman/generator-angular
